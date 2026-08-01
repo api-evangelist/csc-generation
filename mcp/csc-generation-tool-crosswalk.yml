@@ -1,0 +1,132 @@
+generated: '2026-08-01'
+method: derived
+source: >-
+  mcp/csc-generation-mcp.yml +
+  https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json +
+  https://ucp.dev/2026-04-08/services/shopping/rest.openapi.json
+summary: >-
+  Backcountry's UCP merchant profile advertises the SAME shopping service over two
+  transports — REST and MCP — against the same merchant-scoped host. The crosswalk
+  is therefore 1:1 by construction: every MCP tool name is also an OpenAPI
+  operationId in the UCP Shopping Service description the merchant profile points
+  at. Seattle Coffee Gear advertises only the MCP and embedded transports (no REST),
+  so its tools bind to the same operations but have no merchant-hosted REST sibling.
+surfaces:
+  openapi:
+    spec: https://ucp.dev/2026-04-08/services/shopping/rest.openapi.json
+    version: OpenAPI 3.1.0 — "UCP Shopping Service"
+    authored_by: Universal Commerce Protocol (ucp.dev), not CSC Generation
+    note: >-
+      Not copied into openapi/ — CSC Generation authors no OpenAPI of its own. This
+      is the standard service description its brands' declared endpoints implement,
+      referenced by URL from the merchant profiles themselves.
+    merchant_endpoint: https://api.firmly.online/api/2026-01-23/ucp/rest/domain/backcountry.com
+    gated: true
+  graphql: null
+  mcp:
+    - brand: Backcountry
+      url: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
+      gated: true
+      gate: api_key_required (HTTP 401 on anonymous tools/list)
+    - brand: Seattle Coffee Gear
+      url: https://www.seattlecoffeegear.com/api/ucp/mcp
+      gated: true
+      gate: agent profile URI required (HTTP 422 invalid_profile_url on anonymous tools/list)
+crosswalk:
+  - tool: search_catalog
+    category: catalog
+    rest: [search_catalog]
+    binding: rest
+    confidence: high
+    note: POST /catalog/search
+  - tool: lookup_catalog
+    category: catalog
+    rest: [lookup_catalog]
+    binding: rest
+    confidence: high
+    note: POST /catalog/lookup
+  - tool: get_product
+    category: catalog
+    rest: [get_product]
+    binding: rest
+    confidence: high
+    note: POST /catalog/product
+  - tool: create_cart
+    category: cart
+    rest: [create_cart]
+    binding: rest
+    confidence: high
+    note: POST /carts
+  - tool: get_cart
+    category: cart
+    rest: [get_cart]
+    binding: rest
+    confidence: high
+    note: GET /carts/{id}
+  - tool: update_cart
+    category: cart
+    rest: [update_cart]
+    binding: rest
+    confidence: high
+    note: PUT /carts/{id}
+  - tool: cancel_cart
+    category: cart
+    rest: [cancel_cart]
+    binding: rest
+    confidence: high
+    note: POST /carts/{id}/cancel — requires idempotency-key
+  - tool: create_checkout
+    category: checkout
+    rest: [create_checkout]
+    binding: rest
+    confidence: high
+    note: POST /checkout-sessions
+  - tool: get_checkout
+    category: checkout
+    rest: [get_checkout]
+    binding: rest
+    confidence: high
+    note: GET /checkout-sessions/{id}
+  - tool: update_checkout
+    category: checkout
+    rest: [update_checkout]
+    binding: rest
+    confidence: high
+    note: PUT /checkout-sessions/{id}
+  - tool: complete_checkout
+    category: checkout
+    rest: [complete_checkout]
+    binding: rest
+    confidence: high
+    note: >-
+      POST /checkout-sessions/{id}/complete — requires idempotency-key and explicit
+      buyer approval of payment
+  - tool: cancel_checkout
+    category: checkout
+    rest: [cancel_checkout]
+    binding: rest
+    confidence: high
+    note: POST /checkout-sessions/{id}/cancel — requires idempotency-key
+  - tool: get_order
+    category: order
+    rest: [get_order]
+    binding: rest
+    confidence: high
+    note: GET /orders/{id}
+mcp_only: []
+rest_only: []
+coverage:
+  tools_named: 13
+  tools_bound: 13
+  mcp_only: 0
+  rest_operations_total: 13
+  rest_operations_with_tool: 13
+  brands_with_mcp: 2
+  brands_with_rest: 1
+x-evidence:
+  fetched: '2026-08-01'
+  urls:
+    - https://ucp.dev/2026-04-08/services/shopping/rest.openapi.json
+    - https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+    - https://www.backcountry.com/.well-known/ucp
+    - https://www.seattlecoffeegear.com/.well-known/ucp

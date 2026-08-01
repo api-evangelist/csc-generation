@@ -1,0 +1,45 @@
+generated: '2026-08-01'
+method: probed
+source: live probes of the CSC Generation brand UCP endpoints, 2026-08-01
+format: ucp-messages
+format_note: >-
+  Not RFC 9457. The Universal Commerce Protocol returns a `messages[]` array where
+  each entry carries `type`, `code`, `content` and `severity`, alongside a `ucp`
+  version block. Over the MCP transport this is wrapped in a JSON-RPC 2.0 `error`
+  object carrying a numeric `code` and a `data` payload holding the UCP code.
+envelope:
+  rest: '{"messages":[{"type","code","content","severity"}],"ucp":{"version"}}'
+  mcp: '{"jsonrpc":"2.0","id","error":{"code","message","data":{"code","content","continue_url"}}}'
+  severity_values_observed: [recoverable]
+problems:
+  - status: 401
+    code: api_key_required
+    title: API key is required for this merchant and destination
+    severity: recoverable
+    surface: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
+    remediation: >-
+      Obtain a merchant/destination API key from the UCP host (Firmly) before calling
+      the endpoint. No public self-service enrollment surface was found.
+    observed: '2026-08-01'
+  - status: 422
+    code: invalid_profile_url
+    jsonrpc_code: -32001
+    title: 'UCP discovery failed: Unable to fetch agent profile: Missing profile uri'
+    severity: recoverable
+    surface: https://www.seattlecoffeegear.com/api/ucp/mcp
+    remediation: >-
+      Send the calling agent platform's own UCP profile URI in meta.ucp-agent.profile
+      (HTTP UCP-Agent header) so the store can dereference and verify it.
+    recovery_hint: continue_url — https://seattlecoffeegear.myshopify.com/
+    observed: '2026-08-01'
+  - status: 429
+    code: rate_limited
+    title: Rate limit exceeded
+    surface: MCP endpoint (per IP)
+    remediation: back off and retry
+    source: >-
+      documented in https://www.seattlecoffeegear.com/llms.txt ("The MCP endpoint is
+      rate-limited per IP. Back off on 429 responses."), not observed in probe
+coverage_note: >-
+  This catalogue is the observed + documented error surface only. CSC Generation
+  publishes no OpenAPI, so no 4xx/5xx response set could be derived from a spec.

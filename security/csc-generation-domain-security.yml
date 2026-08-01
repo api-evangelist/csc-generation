@@ -1,0 +1,44 @@
+generated: '2026-08-01'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.cscgeneration.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 24 10:48:36 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: www.backcountry.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 14 23:59:59 2026 GMT
+  hsts: null
+- host: api.firmly.online
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 25 00:46:24 2026 GMT
+  hsts: null
+- host: www.seattlecoffeegear.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 17 09:00:02 2026 GMT
+  hsts: true
+  hsts_max_age: 7889238
+domains:
+- domain: cscgeneration.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false
+- domain: backcountry.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
+- domain: seattlecoffeegear.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

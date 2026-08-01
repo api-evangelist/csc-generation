@@ -1,0 +1,43 @@
+generated: '2026-08-01'
+method: probed
+source: >-
+  https://www.backcountry.com/.well-known/ucp,
+  https://www.seattlecoffeegear.com/.well-known/ucp
+versioning:
+  scheme: dated-protocol-version
+  negotiation: >-
+    Each merchant profile publishes a `supported_versions` map — dated version string →
+    a version-pinned copy of the profile document — so an agent pins the version it
+    speaks. The top-level `version` field names the merchant's current default.
+  current:
+    backcountry: '2026-01-23'
+    seattle_coffee_gear: '2026-04-08'
+  supported:
+    backcountry: ['2026-01-11', '2026-01-23', '2026-04-08']
+    seattle_coffee_gear: ['2026-01-23', '2026-04-08']
+  discovery: /.well-known/ucp
+  note: >-
+    The two brands are one protocol generation apart, which is itself the observable
+    lifecycle signal: Seattle Coffee Gear (Shopify-native) runs the latest stable
+    2026-04-08, Backcountry (Firmly-hosted) still defaults to 2026-01-23.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: >-
+    No deprecation or sunset policy is published by CSC Generation or by either brand;
+    older UCP versions remain resolvable at their pinned profile URLs, which is the
+    only continuity guarantee observed.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed:
+    - {url: 'https://status.backcountry.com', result: 'DNS/connection failure'}
+  note: no status page found for CSC Generation or its brand storefronts
+changelog:
+  url: null
+  note: >-
+    No dated changelog published. Version history is only observable as the dated UCP
+    protocol versions listed above.
+deprecated_operations: []

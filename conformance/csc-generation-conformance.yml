@@ -1,0 +1,73 @@
+generated: '2026-08-01'
+method: searched
+source: >-
+  https://www.backcountry.com/.well-known/ucp,
+  https://www.seattlecoffeegear.com/.well-known/ucp,
+  https://www.seattlecoffeegear.com/llms.txt
+standards:
+  - id: ucp-universal-commerce-protocol
+    conforms: true
+    versions: ['2026-01-11', '2026-01-23', '2026-04-08']
+    evidence: >-
+      Two portfolio brands serve UCP merchant profiles from their own
+      /.well-known/ucp with declared services, capabilities and payment handlers.
+    capabilities_declared:
+      - dev.ucp.shopping.checkout
+      - dev.ucp.shopping.cart
+      - dev.ucp.shopping.fulfillment
+      - dev.ucp.shopping.discount
+      - dev.ucp.shopping.order
+      - dev.ucp.shopping.catalog.search
+      - dev.ucp.shopping.catalog.lookup
+      - dev.shopify.catalog
+  - id: mcp-model-context-protocol
+    conforms: true
+    evidence: >-
+      Both merchant profiles declare a transport of "mcp" with a JSON-RPC endpoint;
+      both endpoints answered JSON-RPC 2.0 error objects to an anonymous tools/list.
+  - id: openrpc
+    conforms: true
+    evidence: >-
+      The MCP service schema referenced by the merchant profiles is an OpenRPC 1.3.2
+      document (UCP Shopping Service 2026-04-08).
+  - id: openapi-3.1
+    conforms: partial
+    evidence: >-
+      Backcountry's profile declares a REST transport whose schema is an OpenAPI 3.1.0
+      document — but that document is authored by ucp.dev, not by CSC Generation. CSC
+      Generation publishes no OpenAPI of its own.
+  - id: rfc8615-well-known
+    conforms: true
+    evidence: /.well-known/ucp served from two brand hosts
+  - id: llms-txt
+    conforms: true
+    evidence: https://www.seattlecoffeegear.com/llms.txt (+ mirrored /agents.md)
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: errors use the UCP messages[] envelope, not application/problem+json
+  - id: idempotency-key
+    conforms: true
+    evidence: >-
+      Idempotency-Key is a required meta parameter on the mutating UCP shopping
+      methods the brand endpoints implement (complete_checkout, cancel_checkout,
+      cancel_cart)
+  - id: oauth2
+    conforms: false
+    evidence: no /.well-known/oauth-authorization-server on any probed host
+  - id: openid-connect
+    conforms: false
+    evidence: no /.well-known/openid-configuration on any probed host
+  - id: a2a-agent-card
+    conforms: false
+    evidence: >-
+      no /.well-known/agent-card.json or /.well-known/agent.json served by any CSC
+      Generation host; the only 200s were verified SPA/WordPress catch-alls
+  - id: asyncapi
+    conforms: false
+    evidence: no published event or webhook surface found
+compliance_program:
+  published: false
+  note: >-
+    No CSC Generation trust center, certification page (SOC 2 / ISO 27001 / PCI DSS)
+    or security policy was found on the corporate host. Card handling on the agent
+    surfaces is delegated to the UCP payment handlers (Firmly, Google Pay, Shop Pay).

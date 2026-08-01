@@ -1,0 +1,92 @@
+generated: '2026-08-01'
+method: derived
+source: >-
+  https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json +
+  https://ucp.dev/2026-04-08/services/shopping/rest.openapi.json +
+  https://www.seattlecoffeegear.com/llms.txt + live probes of both merchant endpoints
+scope: >-
+  CSC Generation publishes no API of its own authorship. These conventions are the
+  ones its agent-facing brand endpoints actually enforce, as declared by the merchant
+  profiles at /.well-known/ucp and the Universal Commerce Protocol service
+  descriptions those profiles reference.
+authentication:
+  style: per-merchant
+  backcountry: API key required (observed 401 api_key_required on anonymous tools/list)
+  seattle_coffee_gear: >-
+    Calling agent must present its own UCP profile URI (ucp-agent meta, mapped to the
+    HTTP UCP-Agent header); anonymous calls return 422 invalid_profile_url
+  see: authentication/csc-generation-authentication.yml
+idempotency:
+  supported: true
+  mechanism: idempotency-key
+  header: Idempotency-Key
+  location: >-
+    the required `meta` parameter of the UCP shopping methods; the spec states
+    "Unique key for retry safety. Maps to HTTP Idempotency-Key header."
+  format: uuid
+  required_on:
+    - complete_checkout
+    - cancel_checkout
+    - cancel_cart
+  recommended_on:
+    - create_checkout
+    - update_checkout
+    - create_cart
+    - update_cart
+  evidence: >-
+    https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json — components.schemas.meta
+    declares `idempotency-key`, and the mutating methods list it in their required
+    allOf constraint alongside `ucp-agent`.
+versioning:
+  scheme: dated-protocol-version
+  current:
+    backcountry: '2026-01-23'
+    seattle_coffee_gear: '2026-04-08'
+  negotiation: >-
+    each merchant profile publishes a `supported_versions` map of dated version → the
+    version-pinned profile document URL, so an agent selects the version it speaks
+  discovery: /.well-known/ucp
+  see: lifecycle/csc-generation-lifecycle.yml
+error_envelope:
+  shape: >-
+    UCP `messages[]` — each message carries type, code, content and severity, returned
+    alongside a `ucp.version` block. Over MCP it is wrapped in a JSON-RPC 2.0 error
+    object with a numeric code.
+  observed:
+    - '{"messages":[{"type":"error","code":"api_key_required","content":"API key is required for this merchant and destination","severity":"recoverable"}],"ucp":{"version":"2026-04-08"}}'
+    - '{"jsonrpc":"2.0","id":1,"error":{"code":-32001,"message":"UCP discovery failed","data":{"code":"invalid_profile_url","content":"Unable to fetch agent profile: Missing profile uri","continue_url":"https://seattlecoffeegear.myshopify.com/"}}}'
+  severity_values_observed: [recoverable]
+  recovery_hint_field: continue_url
+  rfc9457: false
+  see: errors/csc-generation-problem-types.yml
+buyer_context:
+  fields: [context.address_country, context.currency]
+  note: >-
+    Seattle Coffee Gear's llms.txt instructs agents to pass buyer country and currency
+    for accurate pricing and availability.
+human_in_the_loop:
+  required: true
+  rule: >-
+    "Checkout requires human approval. Agents must not complete payment without
+    explicit buyer consent." (seattlecoffeegear.com/llms.txt). Where contemporaneous
+    buyer approval is not possible, the store directs agents to route payment through
+    Shop Pay via the Shop skill instead.
+rate_limiting:
+  documented: true
+  scope: per IP on the MCP endpoint
+  signal: HTTP 429
+  guidance: back off on 429 responses
+  source: https://www.seattlecoffeegear.com/llms.txt
+pagination:
+  documented: false
+  note: not published for these endpoints; the UCP catalog search response shape governs
+read_only_surface:
+  note: >-
+    Seattle Coffee Gear additionally publishes unauthenticated read-only storefront
+    JSON for agents that do not transact.
+  endpoints:
+    - GET /products/{handle}.json
+    - GET /collections/{handle}/products.json
+    - GET /search?q={query}&type=product
+    - GET /sitemap.xml
+  verified: https://www.seattlecoffeegear.com/products.json returned 200 application/json

@@ -1,23 +1,126 @@
 aid: csc-generation
 name: CSC Generation
-description: 'CSC Generation is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'CSC Generation is an AI-native retail holding company that acquires overlooked
+  store- and catalogue-based retailers and rebuilds them on Genesis, its agent-orchestrated
+  operating platform. Genesis combines a Data Fabric — a Data Management Platform that
+  ingests and normalizes data across every brand without replatforming, and a Data Intelligence
+  Platform that turns it into decision-ready signals for operators and AI agents — with an
+  automation engine, proprietary retail AI tools, and centralized shared services covering
+  customer experience, supply chain, technology and compliance. The company powers 13 brands
+  and more than $1B in revenue, including Backcountry, Competitive Cyclist, Steep & Cheap,
+  MotoSport, BikeTiresDirect, Level Nine Sports, Sur La Table, One Kings Lane, Seattle Coffee
+  Gear and Home Consignment Center, and operates from Chicago, Austin, Los Angeles, Toronto,
+  Seattle and Salt Lake City. CSC Generation publishes no corporate developer API; its
+  machine-readable surface is per-brand — portfolio storefronts advertise Universal Commerce
+  Protocol (UCP) merchant profiles at /.well-known/ucp that point agents at MCP endpoints for
+  catalog search, cart and checkout.'
+image: https://www.cscgeneration.com/lovable-uploads/eccc3cb7-1376-4c88-a582-2a4ca479b43e.png
 url: https://raw.githubusercontent.com/api-evangelist/csc-generation/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-01'
 modified: '2026-08-01'
 tags:
 - Company
-apis: []
+- Retail
+- E-Commerce
+- Agent Commerce
+- Artificial Intelligence
+- Universal Commerce Protocol
+- Model Context Protocol
+- Holding Company
+- Shopping
+apis:
+- name: Backcountry Agent Commerce (UCP)
+  description: 'Backcountry, a CSC Generation brand, publishes a Universal Commerce Protocol
+    merchant profile at its own /.well-known/ucp declaring UCP 2026-01-23 with both REST and
+    MCP transports for the shopping service — catalog search and lookup, cart, checkout,
+    fulfillment, discount and order — hosted by Firmly on the merchant''s behalf. Anonymous
+    tools/list returns 401 api_key_required, so the surface is credential-gated.'
+  humanURL: https://www.backcountry.com/
+  baseURL: https://api.firmly.online/api/2026-01-23/ucp/rest/domain/backcountry.com
+  tags:
+  - Agent Commerce
+  - E-Commerce
+  - Universal Commerce Protocol
+  - Model Context Protocol
+  properties:
+  - type: WellKnown
+    url: well-known/csc-generation-backcountry-ucp.json
+  - type: MCPServer
+    url: mcp/csc-generation-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/csc-generation-tool-crosswalk.yml
+- name: Seattle Coffee Gear Agent Commerce (UCP)
+  description: 'Seattle Coffee Gear, a CSC Generation brand, publishes a Universal Commerce
+    Protocol merchant profile at /.well-known/ucp declaring UCP 2026-04-08 (Shopify-native)
+    with MCP and embedded transports, plus its own agent instructions at /llms.txt and
+    /agents.md covering the six-step search-to-checkout flow, the buyer-approval rule, rate
+    limits and an unauthenticated read-only storefront JSON surface. Anonymous tools/list
+    returns 422 invalid_profile_url — the store requires the calling agent to present its own
+    UCP profile URI.'
+  humanURL: https://www.seattlecoffeegear.com/
+  baseURL: https://www.seattlecoffeegear.com/api/ucp/mcp
+  tags:
+  - Agent Commerce
+  - E-Commerce
+  - Universal Commerce Protocol
+  - Model Context Protocol
+  properties:
+  - type: WellKnown
+    url: well-known/csc-generation-seattle-coffee-gear-ucp.json
+  - type: MCPServer
+    url: mcp/csc-generation-mcp.yml
+  - type: LLMsTxt
+    url: llms/csc-generation-seattle-coffee-gear-llms.txt
+  - type: Documentation
+    url: https://www.seattlecoffeegear.com/agents.md
+  - type: TermsOfService
+    url: https://www.seattlecoffeegear.com/policies/terms-of-service
+  - type: PrivacyPolicy
+    url: https://www.seattlecoffeegear.com/policies/privacy-policy
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/csc-generation-domain-security.yml
 - type: Website
+  url: https://www.cscgeneration.com/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/csc-generation/
+- type: Careers
+  url: https://www.cscgeneration.com/careers
+- type: SecondaryMarket
   url: https://forgeglobal.com/csc-generation_stock/
+- type: WellKnown
+  url: well-known/csc-generation-well-known.yml
+- type: MCPServer
+  url: mcp/csc-generation-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/csc-generation-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/csc-generation-llms.txt
+- type: Conventions
+  url: conventions/csc-generation-conventions.yml
+- type: Idempotency
+  url: conventions/csc-generation-conventions.yml
+- type: Authentication
+  url: authentication/csc-generation-authentication.yml
+- type: ErrorCatalog
+  url: errors/csc-generation-problem-types.yml
+- type: Conformance
+  url: conformance/csc-generation-conformance.yml
+- type: Lifecycle
+  url: lifecycle/csc-generation-lifecycle.yml
+- type: AgentSkill
+  url: skills/_index.yml
+
+x-enrichment:
+  date: '2026-08-01'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1

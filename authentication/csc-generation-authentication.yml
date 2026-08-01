@@ -1,0 +1,62 @@
+generated: '2026-08-01'
+method: probed
+source: >-
+  live probes of the two UCP endpoints declared by CSC Generation brand merchant
+  profiles, plus https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+note: >-
+  Derived mechanically from OpenAPI securitySchemes was not possible — CSC Generation
+  publishes no OpenAPI. This profile records what the live endpoints actually
+  enforced when probed anonymously on 2026-08-01.
+summary:
+  types: [apiKey, agent-profile-handshake]
+  api_key_in: [unpublished — rejected before the scheme is disclosed]
+  oauth2_flows: []
+  openid_connect: false
+  mutual_tls: false
+schemes:
+  - name: firmly-merchant-api-key
+    type: apiKey
+    brand: Backcountry
+    endpoint: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
+    observed:
+      http_status: 401
+      code: api_key_required
+      message: API key is required for this merchant and destination
+      severity: recoverable
+    enrollment: not publicly documented; no self-service sign-up surface found
+  - name: ucp-agent-profile
+    type: handshake
+    brand: Seattle Coffee Gear
+    endpoint: https://www.seattlecoffeegear.com/api/ucp/mcp
+    parameter: meta.ucp-agent.profile
+    http_header: UCP-Agent
+    value: URL to the calling agent platform's own UCP profile document
+    observed:
+      http_status: 422
+      code: invalid_profile_url
+      message: 'Unable to fetch agent profile: Missing profile uri'
+    note: >-
+      The store authenticates the calling AGENT PLATFORM by dereferencing its
+      published profile document rather than by a bearer credential; payment
+      authorization is separate and requires contemporaneous human approval.
+payment_authorization:
+  - brand: Backcountry
+    handler: ai.firmly.card
+    version: '2026-04-08'
+    instruments: [card]
+    card_brands: [visa, mastercard, amex, discover]
+    encryption: RSA-OAEP-256
+    public_key_url: https://api.firmly.online/api/2026-01-23/ucp/rest/domain/backcountry.com/payment-handlers/ai.firmly.card/key
+  - brand: Seattle Coffee Gear
+    handlers_declared_in: well-known/csc-generation-seattle-coffee-gear-ucp.json
+    note: >-
+      includes com.google.pay among the declared payment handlers; Shop Pay via the
+      Shop skill is the store's recommended route for buy-for-me agents
+docs:
+  - https://www.seattlecoffeegear.com/llms.txt
+  - https://www.seattlecoffeegear.com/agents.md
+x-evidence:
+  fetched: '2026-08-01'
+  probes:
+    - {url: 'https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com', method: 'POST tools/list', http_status: 401}
+    - {url: 'https://www.seattlecoffeegear.com/api/ucp/mcp', method: 'POST tools/list', http_status: 422}

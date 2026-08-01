@@ -1,0 +1,129 @@
+generated: '2026-08-01'
+method: probed
+source: live probe of CSC Generation corporate + portfolio-brand hosts
+notes: >-
+  CSC Generation's corporate host (www.cscgeneration.com) is a client-rendered
+  single-page marketing site that answers 200 with the same 5,858-byte HTML shell
+  for every unknown path — every /.well-known/* probe against it was verified as a
+  catch-all false positive and is recorded as a miss. The real discovery documents
+  live on the portfolio brand storefronts, which publish Universal Commerce Protocol
+  (UCP) merchant profiles at /.well-known/ucp.
+hosts:
+  - host: https://www.cscgeneration.com
+    kind: corporate
+    catch_all_spa: true
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://www.backcountry.com
+    kind: brand-storefront
+    brand: Backcountry
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+        file: csc-generation-backcountry-ucp.json
+        spec: Universal Commerce Protocol
+        version: '2026-01-23'
+      - path: /.well-known/security.txt
+        status: 403
+        note: edge WAF (CloudFront) blocks non-browser clients
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+  - host: https://www.seattlecoffeegear.com
+    kind: brand-storefront
+    brand: Seattle Coffee Gear
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+        file: csc-generation-seattle-coffee-gear-ucp.json
+        spec: Universal Commerce Protocol
+        version: '2026-04-08'
+      - path: /llms.txt
+        status: 200
+        content_type: text/markdown
+        file: ../llms/csc-generation-seattle-coffee-gear-llms.txt
+      - path: /agents.md
+        status: 200
+        content_type: text/markdown
+        file: ../llms/csc-generation-seattle-coffee-gear-agents.md
+  - host: https://www.surlatable.com
+    kind: brand-storefront
+    brand: Sur La Table
+    documents:
+      - path: /.well-known/ucp
+        status: 410
+      - path: /llms.txt
+        status: 410
+  - host: https://www.onekingslane.com
+    kind: brand-storefront
+    brand: One Kings Lane
+    documents:
+      - path: /.well-known/ucp
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://www.steepandcheap.com
+    kind: brand-storefront
+    brand: Steep &amp; Cheap
+    documents:
+      - path: /.well-known/ucp
+        status: 403
+  - host: https://www.competitivecyclist.com
+    kind: brand-storefront
+    brand: Competitive Cyclist
+    documents:
+      - path: /.well-known/ucp
+        status: 403
+  - host: https://www.motosport.com
+    kind: brand-storefront
+    brand: MotoSport
+    documents:
+      - path: /.well-known/ucp
+        status: 403
+  - host: https://www.levelninesports.com
+    kind: brand-storefront
+    brand: Level Nine Sports
+    documents:
+      - path: /.well-known/ucp
+        status: 403
+  - host: https://www.biketiresdirect.com
+    kind: brand-storefront
+    brand: BikeTiresDirect
+    documents:
+      - path: /.well-known/ucp
+        status: 404
+  - host: https://www.homeconsignmentcenter.com
+    kind: brand-storefront
+    brand: Home Consignment Center
+    catch_all_spa: true
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        verified: false
+        note: >-
+          WordPress site answers 200 with the same 371,762-byte HTML page for every
+          unknown path — recorded as a catch-all false positive, not a discovery
+          document.
+x-evidence:
+  fetched: '2026-08-01'
+  method: curl HEAD/GET with browser user-agent, bodies inspected before acceptance
