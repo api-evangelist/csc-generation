@@ -18,7 +18,7 @@ image: https://www.cscgeneration.com/lovable-uploads/eccc3cb7-1376-4c88-a582-2a4
 url: https://raw.githubusercontent.com/api-evangelist/csc-generation/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-01'
 modified: '2026-08-01'
 tags:
