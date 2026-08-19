@@ -1,103 +1,105 @@
 generated: '2026-08-01'
 method: searched
 status: published
-source: >-
-  https://www.backcountry.com/.well-known/ucp and
-  https://www.seattlecoffeegear.com/.well-known/ucp
-summary: >-
-  CSC Generation does not publish a corporate MCP server, but two of its portfolio
-  brands advertise live Model Context Protocol endpoints through Universal Commerce
-  Protocol (UCP) merchant profiles served from their own /.well-known/ucp paths.
-  Both endpoints were probed; both are auth/handshake gated, so tool input schemas
-  come from the UCP service description the merchant profile itself points at
-  (ucp.dev OpenRPC), not from a live tools/list response.
+source: https://www.backcountry.com/.well-known/ucp and https://www.seattlecoffeegear.com/.well-known/ucp
+summary: CSC Generation does not publish a corporate MCP server, but two of its portfolio brands advertise
+  live Model Context Protocol endpoints through Universal Commerce Protocol (UCP) merchant profiles served
+  from their own /.well-known/ucp paths. Both endpoints were probed; both are auth/handshake gated, so
+  tool input schemas come from the UCP service description the merchant profile itself points at (ucp.dev
+  OpenRPC), not from a live tools/list response.
 servers:
-  - name: backcountry-ucp
-    brand: Backcountry
-    transport: http
-    protocol: MCP (JSON-RPC 2.0)
-    url: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
-    discovery: https://www.backcountry.com/.well-known/ucp
-    ucp_version: '2026-01-23'
-    ucp_supported_versions: ['2026-01-11', '2026-01-23', '2026-04-08']
-    operator: Firmly (api.firmly.online) — third-party UCP host for the merchant
-    rest_sibling: https://api.firmly.online/api/2026-01-23/ucp/rest/domain/backcountry.com
-    tools_list:
-      probed: '2026-08-01'
-      http_status: 401
-      gated: true
-      response: >-
-        {"messages":[{"type":"error","code":"api_key_required","content":"API key is
-        required for this merchant and destination","severity":"recoverable"}]}
-  - name: seattle-coffee-gear-ucp
-    brand: Seattle Coffee Gear
-    transport: http
-    protocol: MCP (JSON-RPC 2.0)
-    url: https://www.seattlecoffeegear.com/api/ucp/mcp
-    canonical_url: https://seattlecoffeegear.myshopify.com/api/ucp/mcp
-    discovery: https://www.seattlecoffeegear.com/.well-known/ucp
-    ucp_version: '2026-04-08'
-    ucp_supported_versions: ['2026-01-23', '2026-04-08']
-    operator: Shopify (native UCP support)
-    tools_list:
-      probed: '2026-08-01'
-      http_status: 422
-      gated: true
-      response: >-
-        {"error":{"code":-32001,"message":"UCP discovery failed","data":{"code":
-        "invalid_profile_url","content":"Unable to fetch agent profile: Missing
-        profile uri"}}} — the endpoint requires the calling agent to present its own
-        UCP profile URI (the ucp-agent meta / UCP-Agent header) before it will list
-        tools.
+- name: backcountry-ucp
+  brand: Backcountry
+  transport: http
+  protocol: MCP (JSON-RPC 2.0)
+  url: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
+  discovery: https://www.backcountry.com/.well-known/ucp
+  ucp_version: '2026-01-23'
+  ucp_supported_versions:
+  - '2026-01-11'
+  - '2026-01-23'
+  - '2026-04-08'
+  operator: Firmly (api.firmly.online) — third-party UCP host for the merchant
+  rest_sibling: https://api.firmly.online/api/2026-01-23/ucp/rest/domain/backcountry.com
+  tools_list:
+    probed: '2026-08-01'
+    http_status: 401
+    gated: true
+    response: '{"messages":[{"type":"error","code":"api_key_required","content":"API key is required for
+      this merchant and destination","severity":"recoverable"}]}'
+- name: seattle-coffee-gear-ucp
+  brand: Seattle Coffee Gear
+  transport: http
+  protocol: MCP (JSON-RPC 2.0)
+  url: https://www.seattlecoffeegear.com/api/ucp/mcp
+  canonical_url: https://seattlecoffeegear.myshopify.com/api/ucp/mcp
+  discovery: https://www.seattlecoffeegear.com/.well-known/ucp
+  ucp_version: '2026-04-08'
+  ucp_supported_versions:
+  - '2026-01-23'
+  - '2026-04-08'
+  operator: Shopify (native UCP support)
+  tools_list:
+    probed: '2026-08-01'
+    http_status: 422
+    gated: true
+    response: '{"error":{"code":-32001,"message":"UCP discovery failed","data":{"code": "invalid_profile_url","content":"Unable
+      to fetch agent profile: Missing profile uri"}}} — the endpoint requires the calling agent to present
+      its own UCP profile URI (the ucp-agent meta / UCP-Agent header) before it will list tools.'
 tools_source: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
-tools_source_note: >-
-  OpenRPC 1.3.2 "UCP Shopping Service 2026-04-08" — the service description both
-  merchant profiles reference as the schema for their MCP endpoint. Tool names below
-  are taken verbatim from that document; the six-step flow (search_catalog →
-  create_cart → create_checkout → update_checkout → complete_checkout) is the one
-  Seattle Coffee Gear publishes in its own /llms.txt.
+tools_source_note: OpenRPC 1.3.2 "UCP Shopping Service 2026-04-08" — the service description both merchant
+  profiles reference as the schema for their MCP endpoint. Tool names below are taken verbatim from that
+  document; the six-step flow (search_catalog → create_cart → create_checkout → update_checkout → complete_checkout)
+  is the one Seattle Coffee Gear publishes in its own /llms.txt.
 tools:
-  - name: search_catalog
-    description: Search for products in the catalog
-  - name: lookup_catalog
-    description: Batch lookup products or variants by identifier
-  - name: get_product
-    description: Get product details
-  - name: create_cart
-    description: Create a cart
-  - name: get_cart
-    description: Get cart
-  - name: update_cart
-    description: Update cart
-  - name: cancel_cart
-    description: Cancel cart
-  - name: create_checkout
-    description: Create a checkout
-  - name: get_checkout
-    description: Get checkout
-  - name: update_checkout
-    description: Update checkout
-  - name: complete_checkout
-    description: Complete checkout and place order
-  - name: cancel_checkout
-    description: Cancel checkout
-  - name: get_order
-    description: Get order
+- name: search_catalog
+  description: Search for products in the catalog
+- name: lookup_catalog
+  description: Batch lookup products or variants by identifier
+- name: get_product
+  description: Get product details
+- name: create_cart
+  description: Create a cart
+- name: get_cart
+  description: Get cart
+- name: update_cart
+  description: Update cart
+- name: cancel_cart
+  description: Cancel cart
+- name: create_checkout
+  description: Create a checkout
+- name: get_checkout
+  description: Get checkout
+- name: update_checkout
+  description: Update checkout
+- name: complete_checkout
+  description: Complete checkout and place order
+- name: cancel_checkout
+  description: Cancel checkout
+- name: get_order
+  description: Get order
 x-evidence:
   fetched: '2026-08-01'
   probes:
-    - url: https://www.backcountry.com/.well-known/ucp
-      http_status: 200
-      content_type: application/json
-    - url: https://www.seattlecoffeegear.com/.well-known/ucp
-      http_status: 200
-      content_type: application/json
-    - url: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
-      method: POST tools/list
-      http_status: 401
-    - url: https://www.seattlecoffeegear.com/api/ucp/mcp
-      method: POST tools/list
-      http_status: 422
-    - url: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
-      http_status: 200
-      content_type: application/json
+  - url: https://www.backcountry.com/.well-known/ucp
+    http_status: 200
+    content_type: application/json
+  - url: https://www.seattlecoffeegear.com/.well-known/ucp
+    http_status: 200
+    content_type: application/json
+  - url: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
+    method: POST tools/list
+    http_status: 401
+  - url: https://www.seattlecoffeegear.com/api/ucp/mcp
+    method: POST tools/list
+    http_status: 422
+  - url: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+    http_status: 200
+    content_type: application/json
+deployment:
+  mode: remote
+  endpoint: https://api.firmly.online/api/2026-01-23/ucp/mcp/domain/backcountry.com
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census
