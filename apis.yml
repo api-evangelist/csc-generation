@@ -28,6 +28,16 @@ tags:
 - Agent Commerce
 - Artificial Intelligence
 - Universal Commerce Protocol
+- MCP
+- Holding Company
+- Shopping
+tags_raw:
+- Company
+- Retail
+- E-Commerce
+- Agent Commerce
+- Artificial Intelligence
+- Universal Commerce Protocol
 - Model Context Protocol
 - Holding Company
 - Shopping
@@ -41,6 +51,11 @@ apis:
   humanURL: https://www.backcountry.com/
   baseURL: https://api.firmly.online/api/2026-01-23/ucp/rest/domain/backcountry.com
   tags:
+  - Agent Commerce
+  - E-Commerce
+  - Universal Commerce Protocol
+  - MCP
+  tags_raw:
   - Agent Commerce
   - E-Commerce
   - Universal Commerce Protocol
@@ -63,6 +78,11 @@ apis:
   humanURL: https://www.seattlecoffeegear.com/
   baseURL: https://www.seattlecoffeegear.com/api/ucp/mcp
   tags:
+  - Agent Commerce
+  - E-Commerce
+  - Universal Commerce Protocol
+  - MCP
+  tags_raw:
   - Agent Commerce
   - E-Commerce
   - Universal Commerce Protocol
