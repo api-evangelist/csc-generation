@@ -14,6 +14,17 @@ description: 'CSC Generation is an AI-native retail holding company that acquire
   machine-readable surface is per-brand — portfolio storefronts advertise Universal Commerce
   Protocol (UCP) merchant profiles at /.well-known/ucp that point agents at MCP endpoints for
   catalog search, cart and checkout.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.cscgeneration.com/lovable-uploads/eccc3cb7-1376-4c88-a582-2a4ca479b43e.png
 url: https://raw.githubusercontent.com/api-evangelist/csc-generation/refs/heads/main/apis.yml
 x-type: company
