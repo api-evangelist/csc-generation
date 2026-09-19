@@ -49,7 +49,7 @@ tags:
 - Company
 - Retail
 - E-Commerce
-- Agent Commerce
+- Agentic Commerce
 - Artificial Intelligence
 - Universal Commerce Protocol
 - MCP
@@ -75,7 +75,7 @@ apis:
   humanURL: https://www.backcountry.com/
   baseURL: https://api.firmly.online/api/2026-01-23/ucp/rest/domain/backcountry.com
   tags:
-  - Agent Commerce
+  - Agentic Commerce
   - E-Commerce
   - Universal Commerce Protocol
   - MCP
@@ -102,7 +102,7 @@ apis:
   humanURL: https://www.seattlecoffeegear.com/
   baseURL: https://www.seattlecoffeegear.com/api/ucp/mcp
   tags:
-  - Agent Commerce
+  - Agentic Commerce
   - E-Commerce
   - Universal Commerce Protocol
   - MCP
