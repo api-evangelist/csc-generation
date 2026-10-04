@@ -124,6 +124,9 @@ apis:
     url: https://www.seattlecoffeegear.com/policies/terms-of-service
   - type: PrivacyPolicy
     url: https://www.seattlecoffeegear.com/policies/privacy-policy
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
