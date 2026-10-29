@@ -64,36 +64,94 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-CSC Generation is an AI-native retail holding company that acquires overlooked store- and
-catalogue-based retailers and rebuilds them on **Genesis**, its agent-orchestrated operating
-platform (Data Fabric = DMP + DIP, an automation engine, proprietary retail AI tools, and
-shared services). 13 brands, $1B+ revenue — Backcountry, Competitive Cyclist, Steep & Cheap,
-MotoSport, BikeTiresDirect, Level Nine Sports, Sur La Table, One Kings Lane, Seattle Coffee
-Gear, Home Consignment Center.
+CSC Generation is an AI-native retail holding company that acquires overlooked store- and catalogue-based retailers and rebuilds them on Genesis, its agent-orchestrated operating platform. Genesis combines a Data Fabric — a Data Management Platform that ingests and normalizes data across every brand without replatforming, and a Data Intelligence Platform that turns it into decision-ready signals for operators and AI agents — with an automation engine, proprietary retail AI tools, and centralized shared services covering customer experience, supply chain, technology and compliance. The company powers 13 brands and more than $1B in revenue, including Backcountry, Competitive Cyclist, Steep & Cheap, MotoSport, BikeTiresDirect, Level Nine Sports, Sur La Table, One Kings Lane, Seattle Coffee Gear and Home Consignment Center, and operates from Chicago, Austin, Los Angeles, Toronto, Seattle and Salt Lake City. CSC Generation publishes no corporate developer API; its machine-readable surface is per-brand — portfolio storefronts advertise Universal Commerce Protocol (UCP) merchant profiles at /.well-known/ucp that point agents at MCP endpoints for catalog search, cart and checkout.
 
-- https://www.cscgeneration.com/
+**Areas:** Company · Retail · E-Commerce · Agentic Commerce · Artificial Intelligence · Universal Commerce Protocol · MCP · Holding Company · Shopping
 
-## API surface
+## CSC Generation on APIs.io
 
-CSC Generation publishes **no corporate developer API** — no portal, docs, changelog, SDKs,
-status page or OpenAPI. Its machine-readable surface is **per-brand agent commerce**: two
-portfolio storefronts serve **Universal Commerce Protocol (UCP)** merchant profiles from their
-own `/.well-known/ucp`, pointing agents at MCP endpoints for catalog search, cart and checkout.
+Everything profiled for CSC Generation is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/csc-generation/](https://apis.io/providers/csc-generation/)** — or go straight to one of the APIs or properties below.
 
-| Brand | UCP version | Transports | Host |
-|---|---|---|---|
-| Seattle Coffee Gear | `2026-04-08` | MCP, embedded | Shopify-native; also publishes `/llms.txt` + `/agents.md` |
-| Backcountry | `2026-01-23` | REST, MCP | Firmly (`api.firmly.online`) |
+### APIs (2)
 
-Both MCP endpoints are gated — Backcountry on a merchant API key (`401 api_key_required`),
-Seattle Coffee Gear on the calling agent's own UCP profile URI (`422 invalid_profile_url`).
+- [Backcountry Agent Commerce (UCP)](https://apis.io/apis/csc-generation/backcountry-agent-commerce-ucp/) — Backcountry, a CSC Generation brand, publishes a Universal Commerce Protocol merchant profile at its own /.well-known/ucp declaring UCP 2026-01-23 with both…
+- [Seattle Coffee Gear Agent Commerce (UCP)](https://apis.io/apis/csc-generation/seattle-coffee-gear-agent-commerce-ucp/) — Seattle Coffee Gear, a CSC Generation brand, publishes a Universal Commerce Protocol merchant profile at /.well-known/ucp declaring UCP 2026-04-08…
 
-## Artifacts
+### Published properties
 
-- `well-known/` — every host probed with status; the two verbatim UCP merchant profiles
-- `mcp/` — the two MCP servers, their gates, the 13 UCP shopping tools, and the tool crosswalk
-- `llms/` — Seattle Coffee Gear's own `llms.txt` + `agents.md` (verbatim), plus a generated repo summary
-- `conventions/` — idempotency (`Idempotency-Key`), dated version negotiation, error envelope, human-in-the-loop, rate limits
-- `authentication/` — per-brand gates and the declared payment handlers
-- `errors/` — the UCP `messages[]` envelope and observed codes
-- `conformance/`, `lifecycle/`, `security/`, `skills/`
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [csc-generation-mcp.yml](https://apis.io/servers/csc-generation/csc-generation-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Csc Generation Authentication](https://apis.io/security/csc-generation/csc-generation-authentication/)
+- [Csc Generation Domain Security](https://apis.io/security/csc-generation/csc-generation-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.cscgeneration.com/)
+- [Blog](https://www.cscgeneration.com/blog/)
+
+## API Evangelist rating
+
+**Kin Score 20.2** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 25.6 |
+| Access clarity | 21.1 |
+
+**Agent readiness 16.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | derived (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 22.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/csc-generation/](https://apis.io/providers/csc-generation/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for CSC Generation: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/csc-generation/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
